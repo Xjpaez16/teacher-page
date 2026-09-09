@@ -1,0 +1,142 @@
+---
+import { supabase } from '../db/supabase.js';
+
+interface Testimonial {
+  id?: string | number;
+  name: string;
+  description: string;
+  stars: number;
+  role?: string;
+  avatarBg?: string;
+  avatarColor?: string;
+}
+
+const defaultTestimonials: Testimonial[] = [
+  {
+    id: 'default-1',
+    name: 'Elena Carreño',
+    role: 'Madre de Mateo - 4º ESO',
+    stars: 5,
+    description: '“Mateo arrastraba una fobia terrible a las matemáticas. En dos meses con Clara no sólo aprobó con notable, sino que recuperó la sonrisa y la seguridad en sí mismo.”',
+    avatarBg: 'bg-primary-fixed',
+    avatarColor: 'text-on-primary-fixed'
+  },
+  {
+    id: 'default-2',
+    name: 'Lucía Romero',
+    role: 'Estudiante universitaria',
+    stars: 5,
+    description: '“Preparé mi B2 de Cambridge con Clara mientras cursaba la universidad. Sus clases online son amenas, dinámicas y súper estructuradas. ¡Aprobé a la primera con distinción!”',
+    avatarBg: 'bg-secondary-fixed',
+    avatarColor: 'text-on-secondary-fixed'
+  },
+  {
+    id: 'default-3',
+    name: 'Javier Alarcón',
+    role: 'Padre de Sofía - Bachillerato',
+    stars: 5,
+    description: '“La serenidad que transmite no tiene precio. Sofía estaba colapsada con el Bachillerato y Clara le enseñó a gestionar el tiempo y el estudio. Sacó un 12.8 en EVAU.”',
+    avatarBg: 'bg-tertiary-fixed',
+    avatarColor: 'text-on-tertiary-fixed'
+  }
+];
+
+let testimonials: Testimonial[] = [];
+
+try {
+  const { data, error } = await supabase
+    .from('testimonies')
+    .select('id, name, description, stars, approved, created_at')
+    .eq('approved', true)
+    .order('created_at', { ascending: false });
+
+  if (!error && data && data.length > 0) {
+    const palette = [
+      { bg: 'bg-primary-fixed', text: 'text-on-primary-fixed' },
+      { bg: 'bg-secondary-fixed', text: 'text-on-secondary-fixed' },
+      { bg: 'bg-tertiary-fixed', text: 'text-on-tertiary-fixed' }
+    ];
+
+    testimonials = data.map((item, idx) => {
+      // Extrae rol si viene formateado con paréntesis o viñeta
+      const match = item.name.match(/^(.*?)(?:\s*\((.*?)\)|\s*•\s*(.*?))?$/);
+      const cleanName = match && (match[2] || match[3]) ? match[1].trim() : item.name;
+      const role = match && (match[2] || match[3]) ? (match[2] || match[3]).trim() : 'Estudiante / Familia';
+      const color = palette[idx % palette.length];
+
+      return {
+        id: item.id,
+        name: cleanName,
+        role: role,
+        stars: item.stars || 5,
+        description: item.description.startsWith('“') ? item.description : `“${item.description}”`,
+        avatarBg: color.bg,
+        avatarColor: color.text
+      };
+    });
+  } else {
+    testimonials = defaultTestimonials;
+  }
+} catch (e) {
+  testimonials = defaultTestimonials;
+}
+
+function getInitials(name: string) {
+  return name
+    .split(' ')
+    .map(w => w[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
+}
+---
+
+<section class="w-full py-space-3xl lg:py-space-4xl bg-surface-container-low/50" id="testimonios">
+  <div class="max-w-max-width-content mx-auto px-gutter-mobile lg:px-gutter-desktop">
+    <div class="flex flex-col items-center text-center max-w-2xl mx-auto gap-space-xs mb-space-2xl">
+      <span class="inline-flex items-center px-space-md py-1 rounded-full bg-primary-fixed/60 text-on-primary-fixed-variant font-label-sm text-label-sm">
+        Voces de confianza
+      </span>
+      <h2 class="font-headline-lg text-headline-lg-mobile lg:text-headline-lg text-on-surface tracking-tight">
+        Lo que dicen mis estudiantes y sus familias
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+      {testimonials.map((t) => (
+        <div class="p-space-xl rounded-[2.5rem] bg-surface-container-lowest shadow-[0_4px_24px_rgba(36,33,30,0.04)] flex flex-col justify-between gap-space-md hover:-translate-y-1 transition-transform duration-300">
+          <div class="flex flex-col gap-space-sm">
+            <!-- Stars -->
+            <div class="flex items-center text-amber-500 gap-0.5">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <span
+                  class="material-symbols-outlined text-[20px]"
+                  style={`font-variation-settings: 'FILL' ${i < t.stars ? 1 : 0};`}
+                >
+                  star
+                </span>
+              ))}
+            </div>
+            <p class="font-body-md text-body-md text-on-surface italic leading-relaxed">
+              {t.description}
+            </p>
+          </div>
+
+          <div class="flex items-center gap-space-sm pt-space-xs">
+            <div class={`w-12 h-12 rounded-full ${t.avatarBg || 'bg-primary-fixed'} flex items-center justify-center font-headline-sm ${t.avatarColor || 'text-on-primary-fixed'} font-bold shrink-0`}>
+              {getInitials(t.name)}
+            </div>
+            <div class="flex flex-col text-left">
+              <span class="font-headline-sm text-[16px] text-on-surface">{t.name}</span>
+              <span class="inline-block mt-0.5 font-label-sm text-[11px] px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant self-start">
+                {t.role}
+              </span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
