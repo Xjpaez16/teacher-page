@@ -1,4 +1,26 @@
 ---
+import { supabase } from '../db/supabase.js';
+
+let avgRating = '—';
+let totalReviews = 0;
+
+try {
+  const { data, error } = await supabase
+    .from('testimonies')
+    .select('stars')
+    .eq('approved', true);
+
+  if (!error && data && data.length > 0) {
+    const validStars = data.filter((r) => r.stars !== null).map((r) => r.stars as number);
+    if (validStars.length > 0) {
+      const avg = validStars.reduce((a, b) => a + b, 0) / validStars.length;
+      avgRating = avg.toFixed(1);
+      totalReviews = validStars.length;
+    }
+  }
+} catch (_) {
+  // Fallback silencioso
+}
 ---
 
 <section class="relative w-full overflow-hidden pb-space-3xl pt-space-xl lg:pb-space-4xl">
@@ -9,8 +31,8 @@
         <!-- Floating Status Pills -->
         <div class="flex flex-wrap items-center gap-space-xs">
           <span class="inline-flex items-center gap-1.5 px-space-md py-1.5 rounded-full bg-secondary/10 text-secondary font-label-sm text-label-sm shadow-sm">
-            <span class="text-amber-500 font-bold">⭐ 4.9/5</span>
-            <span>valoración de familias</span>
+            <span class="text-amber-500 font-bold">⭐ {avgRating}/5</span>
+            <span>valoración</span>
           </span>
           <span class="inline-flex items-center gap-1.5 px-space-md py-1.5 rounded-full bg-primary-fixed/60 text-on-primary-fixed-variant font-label-sm text-label-sm shadow-sm">
             <span>📚 +350</span>
