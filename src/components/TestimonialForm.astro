@@ -190,6 +190,7 @@
       } else {
         if (errorMsg) errorMsg.classList.add('hidden');
         if (successMsg) successMsg.classList.remove('hidden');
+        window.dispatchEvent(new CustomEvent('testimonial-submitted'));
         form.reset();
         currentRating = 5;
         if (ratingLabel) ratingLabel.textContent = '5 de 5 estrellas';
