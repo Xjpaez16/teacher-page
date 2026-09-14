@@ -1,0 +1,257 @@
+---
+import { supabase } from '../db/supabase.js';
+
+interface Testimonial {
+  id: string;
+  name: string;
+  description: string | null;
+  stars: number | null;
+  approved: boolean | null;
+  created_at: string | null;
+}
+
+let initialTestimonials: Testimonial[] = [];
+
+try {
+  const { data, error } = await supabase
+    .from('testimonies')
+    .select('id, name, description, stars, approved, created_at')
+    .eq('approved', true)
+    .order('created_at', { ascending: false });
+
+  if (!error && data) {
+    initialTestimonials = data;
+  }
+} catch (e) {
+  initialTestimonials = [];
+}
+
+function getInitials(name: string) {
+  return name
+    .split(' ')
+    .map((w) => w[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
+}
+
+function parseNameAndRole(fullName: string) {
+  const match = fullName.match(/^(.*?)(?:\s*\((.*?)\)|\s*•\s*(.*?))?$/);
+  const cleanName = match && (match[2] || match[3]) ? match[1].trim() : fullName;
+  const role = match && (match[2] || match[3]) ? (match[2] || match[3]).trim() : 'Estudiante / Familia';
+  return { cleanName, role };
+}
+
+const palette = [
+  { bg: 'bg-primary-fixed', text: 'text-on-primary-fixed' },
+  { bg: 'bg-secondary-fixed', text: 'text-on-secondary-fixed' },
+  { bg: 'bg-tertiary-fixed', text: 'text-on-tertiary-fixed' }
+];
+---
+
+<section class="w-full py-space-3xl lg:py-space-4xl bg-surface-container-low/50" id="testimonios">
+  <div class="max-w-max-width-content mx-auto px-gutter-mobile lg:px-gutter-desktop">
+    <div class="flex flex-col items-center text-center max-w-2xl mx-auto gap-space-xs mb-space-2xl">
+      <span class="inline-flex items-center px-space-md py-1 rounded-full bg-primary-fixed/60 text-on-primary-fixed-variant font-label-sm text-label-sm">
+        Voces de confianza
+      </span>
+      <h2 class="font-headline-lg text-headline-lg-mobile lg:text-headline-lg text-on-surface tracking-tight">
+        Lo que dicen mis estudiantes y sus familias
+      </h2>
+    </div>
+
+    <!-- Contenedor dinámico de testimonios -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg" id="testimonials-container">
+      {initialTestimonials.length > 0 ? (
+        initialTestimonials.map((t, idx) => {
+          const { cleanName, role } = parseNameAndRole(t.name);
+          const color = palette[idx % palette.length];
+          const rating = t.stars || 5;
+          const quote = t.description ? (t.description.startsWith('“') ? t.description : `“${t.description}”`) : '';
+
+          return (
+            <div class="p-space-xl rounded-[2.5rem] bg-surface-container-lowest shadow-[0_4px_24px_rgba(36,33,30,0.04)] flex flex-col justify-between gap-space-md hover:-translate-y-1 transition-transform duration-300">
+              <div class="flex flex-col gap-space-sm">
+                <!-- Stars -->
+                <div class="flex items-center text-amber-500 gap-0.5">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <span
+                      class="material-symbols-outlined text-[20px]"
+                      style={`font-variation-settings: 'FILL' ${i < rating ? 1 : 0};`}
+                    >
+                      star
+                    </span>
+                  ))}
+                </div>
+                <p class="font-body-md text-body-md text-on-surface italic leading-relaxed">
+                  {quote}
+                </p>
+              </div>
+
+              <div class="flex items-center gap-space-sm pt-space-xs">
+                <div class={`w-12 h-12 rounded-full ${color.bg} flex items-center justify-center font-headline-sm ${color.text} font-bold shrink-0`}>
+                  {getInitials(cleanName)}
+                </div>
+                <div class="flex flex-col text-left">
+                  <span class="font-headline-sm text-[16px] text-on-surface">{cleanName}</span>
+                  <span class="inline-block mt-0.5 font-label-sm text-[11px] px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant self-start">
+                    {role}
+                  </span>
+                </div>
+              </div>
+            </div>
+          );
+        })
+      ) : (
+        <div class="col-span-full flex flex-col items-center justify-center p-space-2xl bg-surface-container-lowest rounded-[2.5rem] shadow-sm text-center max-w-lg mx-auto gap-space-sm border border-dashed border-outline-variant/60 w-full">
+          <div class="w-14 h-14 rounded-full bg-secondary-fixed/40 flex items-center justify-center text-secondary mb-1">
+            <span class="material-symbols-outlined text-[28px]">rate_review</span>
+          </div>
+          <h3 class="font-headline-sm text-headline-sm text-on-surface">
+            Sin testimonios hasta el momento
+          </h3>
+          <p class="font-body-md text-body-md text-on-surface-variant max-w-sm">
+            Aún no hay opiniones publicadas. Si has sido mi alumno o de sus familias, ¡te invitamos a compartir tu experiencia!
+          </p>
+          <a
+            class="mt-space-xs px-space-lg py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm hover:bg-primary-container active:scale-[0.98] transition-all"
+            href="#testimonial-form"
+          >
+            Dejar mi testimonio
+          </a>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<script>
+  import { supabase } from '../db/supabase.js';
+
+  const palette = [
+    { bg: 'bg-primary-fixed', text: 'text-on-primary-fixed' },
+    { bg: 'bg-secondary-fixed', text: 'text-on-secondary-fixed' },
+    { bg: 'bg-tertiary-fixed', text: 'text-on-tertiary-fixed' }
+  ];
+
+  function getInitials(name: string) {
+    return name
+      .split(' ')
+      .map((w) => w[0])
+      .filter(Boolean)
+      .slice(0, 2)
+      .join('')
+      .toUpperCase();
+  }
+
+  function parseNameAndRole(fullName: string) {
+    const match = fullName.match(/^(.*?)(?:\s*\((.*?)\)|\s*•\s*(.*?))?$/);
+    const cleanName = match && (match[2] || match[3]) ? match[1].trim() : fullName;
+    const role = match && (match[2] || match[3]) ? (match[2] || match[3]).trim() : 'Estudiante / Familia';
+    return { cleanName, role };
+  }
+
+  function escapeHtml(str: string) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  async function loadTestimonials() {
+    const container = document.getElementById('testimonials-container');
+    if (!container) return;
+
+    try {
+      const { data, error } = await supabase
+        .from('testimonies')
+        .select('id, name, description, stars, approved, created_at')
+        .eq('approved', true)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error al obtener testimonios de la base de datos:', error);
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full flex flex-col items-center justify-center p-space-2xl bg-surface-container-lowest rounded-[2.5rem] shadow-sm text-center max-w-lg mx-auto gap-space-sm border border-dashed border-outline-variant/60 w-full">
+            <div class="w-14 h-14 rounded-full bg-secondary-fixed/40 flex items-center justify-center text-secondary mb-1">
+              <span class="material-symbols-outlined text-[28px]">rate_review</span>
+            </div>
+            <h3 class="font-headline-sm text-headline-sm text-on-surface">
+              Sin testimonios hasta el momento
+            </h3>
+            <p class="font-body-md text-body-md text-on-surface-variant max-w-sm">
+              Aún no hay opiniones publicadas. Si has sido mi alumno o de sus familias, ¡te invitamos a compartir tu experiencia!
+            </p>
+            <a
+              class="mt-space-xs px-space-lg py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm hover:bg-primary-container active:scale-[0.98] transition-all"
+              href="#testimonial-form"
+            >
+              Dejar mi testimonio
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      const cardsHtml = data
+        .map((t, idx) => {
+          const { cleanName, role } = parseNameAndRole(t.name || 'Anónimo');
+          const color = palette[idx % palette.length];
+          const rating = t.stars || 5;
+          const desc = t.description ? escapeHtml(t.description) : '';
+          const quote = desc.startsWith('“') ? desc : `“${desc}”`;
+          const initials = getInitials(cleanName);
+
+          const starsHtml = Array.from({ length: 5 })
+            .map(
+              (_, i) =>
+                `<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' ${i < rating ? 1 : 0};">star</span>`
+            )
+            .join('');
+
+          return `
+            <div class="p-space-xl rounded-[2.5rem] bg-surface-container-lowest shadow-[0_4px_24px_rgba(36,33,30,0.04)] flex flex-col justify-between gap-space-md hover:-translate-y-1 transition-transform duration-300">
+              <div class="flex flex-col gap-space-sm">
+                <div class="flex items-center text-amber-500 gap-0.5">
+                  ${starsHtml}
+                </div>
+                <p class="font-body-md text-body-md text-on-surface italic leading-relaxed">
+                  ${quote}
+                </p>
+              </div>
+
+              <div class="flex items-center gap-space-sm pt-space-xs">
+                <div class="w-12 h-12 rounded-full ${color.bg} flex items-center justify-center font-headline-sm ${color.text} font-bold shrink-0">
+                  ${escapeHtml(initials)}
+                </div>
+                <div class="flex flex-col text-left">
+                  <span class="font-headline-sm text-[16px] text-on-surface">${escapeHtml(cleanName)}</span>
+                  <span class="inline-block mt-0.5 font-label-sm text-[11px] px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant self-start">
+                    ${escapeHtml(role)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          `;
+        })
+        .join('');
+
+      container.innerHTML = cardsHtml;
+    } catch (err) {
+      console.error('Error inesperado consultando testimonios:', err);
+    }
+  }
+
+  // Carga inicial y escucha de nuevos envíos
+  loadTestimonials();
+  window.addEventListener('testimonial-submitted', () => {
+    loadTestimonials();
+  });
+</script>

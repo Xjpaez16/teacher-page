@@ -1,0 +1,219 @@
+---
+---
+
+<section class="w-full py-space-3xl lg:py-space-4xl bg-surface-container-low/40">
+  <div class="max-w-max-width-content mx-auto px-gutter-mobile lg:px-gutter-desktop">
+    <div class="max-w-2xl mx-auto bg-surface-container-lowest rounded-[2.5rem] p-space-xl sm:p-space-2xl shadow-[0_12px_36px_-6px_rgba(36,33,30,0.06)] flex flex-col items-center">
+      <span class="inline-flex items-center px-space-md py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm mb-space-xs">
+        Tu opinión suma
+      </span>
+      <h2 class="font-headline-lg text-headline-lg-mobile lg:text-headline-lg text-on-surface text-center tracking-tight mb-space-xs">
+        ¿Has sido mi alumno? Comparte tu experiencia
+      </h2>
+      <p class="font-body-md text-body-md text-on-surface-variant text-center mb-space-xl">
+        Tus palabras ayudan a que otras familias y estudiantes descubran una forma más humana y eficaz de aprender.
+      </p>
+
+      <form class="w-full flex flex-col gap-space-md" id="testimonial-form">
+        <!-- Nombre y apellido -->
+        <div class="flex flex-col gap-1.5">
+          <label class="font-label-md text-label-md text-on-surface font-medium pl-3" for="student-name">
+            Nombre y apellido
+          </label>
+          <input
+            class="w-full h-12 px-space-lg rounded-full bg-surface-container-low/80 text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none shadow-sm transition-all placeholder:text-on-surface-variant/60"
+            id="student-name"
+            placeholder="Ej. Carmen Navarro"
+            required
+            type="text"
+          />
+        </div>
+
+        <!-- Relación / Curso -->
+        <div class="flex flex-col gap-1.5">
+          <label class="font-label-md text-label-md text-on-surface font-medium pl-3" for="student-role">
+            Relación / Curso
+          </label>
+          <input
+            class="w-full h-12 px-space-lg rounded-full bg-surface-container-low/80 text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none shadow-sm transition-all placeholder:text-on-surface-variant/60"
+            id="student-role"
+            placeholder="Ej. Alumno de Bachillerato / Madre de Lucas"
+            required
+            type="text"
+          />
+        </div>
+
+        <!-- Puntuación (Selector de estrellas interactivo) -->
+        <div class="flex flex-col gap-1.5">
+          <label class="font-label-md text-label-md text-on-surface font-medium pl-3">
+            Puntuación
+          </label>
+          <div class="flex items-center gap-2 px-space-md py-2.5 rounded-full bg-surface-container-low/80 w-fit">
+            <button class="star-btn text-amber-500 hover:scale-110 transition-transform" data-rating="1" type="button" aria-label="1 estrella">
+              <span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">star</span>
+            </button>
+            <button class="star-btn text-amber-500 hover:scale-110 transition-transform" data-rating="2" type="button" aria-label="2 estrellas">
+              <span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">star</span>
+            </button>
+            <button class="star-btn text-amber-500 hover:scale-110 transition-transform" data-rating="3" type="button" aria-label="3 estrellas">
+              <span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">star</span>
+            </button>
+            <button class="star-btn text-amber-500 hover:scale-110 transition-transform" data-rating="4" type="button" aria-label="4 estrellas">
+              <span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">star</span>
+            </button>
+            <button class="star-btn text-amber-500 hover:scale-110 transition-transform" data-rating="5" type="button" aria-label="5 estrellas">
+              <span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">star</span>
+            </button>
+            <span class="font-label-sm text-label-sm text-on-surface-variant ml-2 font-semibold" id="rating-label">
+              5 de 5 estrellas
+            </span>
+          </div>
+        </div>
+
+        <!-- Reseña textarea -->
+        <div class="flex flex-col gap-1.5">
+          <label class="font-label-md text-label-md text-on-surface font-medium pl-3" for="student-review">
+            Tu testimonio o mensaje
+          </label>
+          <textarea
+            class="w-full p-space-lg rounded-[1.5rem] bg-surface-container-low/80 text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none shadow-sm transition-all placeholder:text-on-surface-variant/60 resize-none"
+            id="student-review"
+            placeholder="Cuéntanos cómo fue tu proceso, qué logros conseguiste y qué destacarías de las clases con Clara..."
+            required
+            rows="4"
+          ></textarea>
+        </div>
+
+        <!-- Botón de envío tipo pill -->
+        <button
+          class="w-full mt-space-xs py-4 rounded-full bg-primary text-on-primary font-headline-sm text-[16px] shadow-[0_8px_20px_-4px_rgba(224,109,83,0.35)] hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+          id="submit-btn"
+          type="submit"
+        >
+          <span>Publicar testimonio</span>
+          <span class="material-symbols-outlined text-[20px]">send</span>
+        </button>
+      </form>
+
+      <!-- Mensaje de confirmación -->
+      <div
+        class="hidden mt-space-md p-space-md rounded-full bg-secondary-container text-on-secondary-container font-label-md text-label-md text-center w-full flex items-center justify-center gap-2"
+        id="form-success"
+      >
+        <span class="material-symbols-outlined text-[20px]">check_circle</span>
+        <span>¡Gracias por tus palabras! Tu testimonio ha sido recibido con cariño y se publicará tras su revisión.</span>
+      </div>
+
+      <!-- Mensaje de error -->
+      <div
+        class="hidden mt-space-md p-space-md rounded-full bg-error-container text-on-error font-label-md text-label-md text-center w-full flex items-center justify-center gap-2"
+        id="form-error"
+      >
+        <span class="material-symbols-outlined text-[20px]">error</span>
+        <span id="form-error-text">Hubo un error al enviar el testimonio. Inténtalo de nuevo.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { supabase } from '../db/supabase.js';
+
+  let currentRating = 5;
+  const form = document.getElementById('testimonial-form') as HTMLFormElement | null;
+  const nameInput = document.getElementById('student-name') as HTMLInputElement | null;
+  const roleInput = document.getElementById('student-role') as HTMLInputElement | null;
+  const reviewInput = document.getElementById('student-review') as HTMLTextAreaElement | null;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+  const successMsg = document.getElementById('form-success');
+  const errorMsg = document.getElementById('form-error');
+  const errorText = document.getElementById('form-error-text');
+  const ratingLabel = document.getElementById('rating-label');
+  const starBtns = document.querySelectorAll('.star-btn');
+
+  // Interacción del selector de estrellas
+  starBtns.forEach((btn) => {
+    btn.addEventListener('click', function (this: HTMLButtonElement) {
+      const rating = parseInt(this.getAttribute('data-rating') || '5', 10);
+      currentRating = rating;
+      if (ratingLabel) {
+        ratingLabel.textContent = `${rating} de 5 estrellas`;
+      }
+
+      starBtns.forEach((s, idx) => {
+        const starIcon = s.querySelector('.material-symbols-outlined') as HTMLElement | null;
+        if (idx < rating) {
+          s.classList.add('text-amber-500');
+          s.classList.remove('text-on-surface-variant/30');
+          if (starIcon) starIcon.style.fontVariationSettings = "'FILL' 1";
+        } else {
+          s.classList.remove('text-amber-500');
+          s.classList.add('text-on-surface-variant/30');
+          if (starIcon) starIcon.style.fontVariationSettings = "'FILL' 0";
+        }
+      });
+    });
+  });
+
+  // Envío del formulario hacia Supabase
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name = nameInput?.value.trim() || '';
+    const role = roleInput?.value.trim() || '';
+    const description = reviewInput?.value.trim() || '';
+
+    if (!name || !description) return;
+
+    const formattedName = role ? `${name} (${role})` : name;
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+      submitBtn.innerHTML = `<span>Enviando testimonio...</span><span class="material-symbols-outlined animate-spin text-[20px]">refresh</span>`;
+    }
+
+    try {
+      const { error } = await supabase.from('testimonies').insert({
+        name: formattedName,
+        description: description,
+        stars: currentRating,
+        approved: false
+      });
+
+      if (error) {
+        console.error('Error insertando testimonio:', error);
+        if (errorMsg && errorText) {
+          errorText.textContent = 'Hubo un error al enviar tu reseña. Por favor, intenta de nuevo.';
+          errorMsg.classList.remove('hidden');
+        }
+      } else {
+        if (errorMsg) errorMsg.classList.add('hidden');
+        if (successMsg) successMsg.classList.remove('hidden');
+        window.dispatchEvent(new CustomEvent('testimonial-submitted'));
+        form.reset();
+        currentRating = 5;
+        if (ratingLabel) ratingLabel.textContent = '5 de 5 estrellas';
+        starBtns.forEach((s) => {
+          const icon = s.querySelector('.material-symbols-outlined') as HTMLElement | null;
+          s.classList.add('text-amber-500');
+          s.classList.remove('text-on-surface-variant/30');
+          if (icon) icon.style.fontVariationSettings = "'FILL' 1";
+        });
+      }
+    } catch (err) {
+      console.error('Error inesperado:', err);
+      if (errorMsg && errorText) {
+        errorText.textContent = 'Error de conexión con el servidor de testimonios.';
+        errorMsg.classList.remove('hidden');
+      }
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+        submitBtn.innerHTML = `<span>Publicar testimonio</span><span class="material-symbols-outlined text-[20px]">send</span>`;
+      }
+    }
+  });
+</script>
+

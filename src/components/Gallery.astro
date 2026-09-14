@@ -1,0 +1,68 @@
+---
+const galleryItems = [
+  {
+    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuDD2dMACgH_1YpcUGHigjZbrsMxllOd5bRUKdIrtwE1yuMaFQm1jkTma5cuQmmO8CeC-0mZfJrT-JtZeE7e6Z4UG9D5J9ZMpEhyhgN-NeQODm80qRVGpPb7snYeEkY7eSii3r-vItwpyJz1kLLLHKOgwZZwUn8AeTN3rwl5F8w8w5ZNZ41Nz-_Ml7F30YXQVWhmCThCKzO7Z1BelhICCQpRNZZ6g083OPNyPSrsjwBAiu8DxnE51QegUQ",
+    alt: "Apuntes y esquemas organizados con código de color",
+    badge: "Metodología visual",
+    badgeColor: "text-secondary-fixed",
+    title: "Apuntes & esquemas claros"
+  },
+  {
+    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuB3iMoq9Cbm263RVCHVTGrCfFmTE5MLoCFcFGiiJHE7STUOxH8SLiZcE9i9gK59o_9mQcDmFdqwXKTsVWiFD2litvSj7cUF2ULj2w3PuHopoY2sbISDPo8MNH38OkIrudvBtq-FgAjPTfZxR3UGmM4M_IWzoCzg5BhXCVl9zS-RqYXKF1bCBzfQFb1yka32tcFXNeRFb29F6yj-NiArxcYXJ4r0FxJT-vJ-Fr4jw8DmQUcRW4idi-tCvQ",
+    alt: "Biblioteca luminosa y acogedora con estanterías de roble",
+    badge: "Espacio físico",
+    badgeColor: "text-primary-fixed",
+    title: "Biblioteca acogedora"
+  },
+  {
+    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuArowtRvvfiX3FviqmbH9-_9RKrW_GEBSyOKlAokB8CzR82ztB0ZgzsBA0tGhUKoOBBsKnR0XZhF0ffntxparc1QKDl5o4RSUHswGHa9d10aw0s5zgTugUpzynlpVsDdqfZw4RTYa5K90imRB8D4hJoCOoplHqePHYIZ3FQBFFisF3x3ukS7iESwVruI8dkMV2DQGp_e0xSBHnu5uWCvNtdjuJepAjWP8W6Y5GaTIGbd84_dSyQe2Q1LQ",
+    alt: "Sesión digital interactiva con iPad y Apple Pencil",
+    badge: "Tecnología ágil",
+    badgeColor: "text-tertiary-fixed",
+    title: "Pizarra digital interactiva"
+  },
+  {
+    src: "https://lh3.googleusercontent.com/aida-public/AB6AXuB3umQ7ANrjYccximSUH9GbOAX6RIOAEGUnMgateGl_Gn3BzgV7jfou9kxEUs-eY00xp-_KuWgCgF8gOgDayvSPjd9dl5NQjL-Iyr-M7rwWWNq1V0n8SDW3L-gye7xywUrirKrqLc8g9PwbyvmU50e1-DHxq59wxEUGmAzffFeMqGRxckpw-O889h9S-PAyYPNc6vJHNQ_gEAKmtswPT3vBXYbV87FqQvyl_L8oYUP4eSeGeyJdV3srXw",
+    alt: "Estudiante desarrollando mapa mental conceptual",
+    badge: "Técnicas de estudio",
+    badgeColor: "text-secondary-fixed",
+    title: "Mapas conceptuales"
+  }
+];
+---
+
+<section class="w-full py-space-3xl lg:py-space-4xl" id="galeria">
+  <div class="max-w-max-width-content mx-auto px-gutter-mobile lg:px-gutter-desktop">
+    <div class="flex flex-col items-center text-center max-w-2xl mx-auto gap-space-xs mb-space-2xl">
+      <span class="inline-flex items-center px-space-md py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">
+        Espacio de trabajo
+      </span>
+      <h2 class="font-headline-lg text-headline-lg-mobile lg:text-headline-lg text-on-surface tracking-tight">
+        Un vistazo a nuestras clases y espacio de trabajo
+      </h2>
+      <p class="font-body-md text-body-md text-on-surface-variant">
+        Ambientes luminosos, materiales interactivos y sesiones llenas de motivación.
+      </p>
+    </div>
+
+    <!-- 4 Cards Visual Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+      {galleryItems.map((item) => (
+        <div class="group relative overflow-hidden rounded-[2.5rem] bg-surface-container-lowest shadow-[0_4px_20px_rgba(36,33,30,0.06)] aspect-square flex flex-col">
+          <img
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+            alt={item.alt}
+            src={item.src}
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-on-surface/80 via-transparent to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+          <div class="absolute bottom-0 inset-x-0 p-space-lg text-white">
+            <span class={`font-label-sm text-label-sm ${item.badgeColor}`}>{item.badge}</span>
+            <p class="font-headline-sm text-[16px] text-white font-semibold mt-0.5">{item.title}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
