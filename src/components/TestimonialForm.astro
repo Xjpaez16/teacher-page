@@ -84,6 +84,26 @@
           ></textarea>
         </div>
 
+        <!-- Consentimiento de tratamiento de datos -->
+        <div class="flex flex-col gap-1.5">
+          <div class="flex items-start gap-3 rounded-[1.25rem] bg-surface-container-low/80 px-space-md py-space-sm border border-outline/20">
+            <input
+              class="mt-1 h-5 w-5 rounded border-outline text-primary focus:ring-primary"
+              id="data-policy"
+              name="data_policy"
+              required
+              type="checkbox"
+            />
+            <label class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed" for="data-policy">
+              Acepto el tratamiento de mis datos personales para publicar mi testimonio, guardar la información necesaria para la respuesta y la gestión de la comunicación asociada al proceso. He leído la
+              <button class="policy-open-btn text-primary underline decoration-2 underline-offset-2 hover:text-primary-container transition-colors" type="button">
+                política de tratamiento de datos
+              </button>
+              y autorizo su uso conforme a la Ley 1581 de 2012, el Decreto 1377 de 2013 y demás normas aplicables.
+            </label>
+          </div>
+        </div>
+
         <!-- Botón de envío tipo pill -->
         <button
           class="w-full mt-space-xs py-4 rounded-full bg-primary text-on-primary font-headline-sm text-[16px] shadow-[0_8px_20px_-4px_rgba(224,109,83,0.35)] hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-2"
@@ -97,11 +117,14 @@
 
       <!-- Mensaje de confirmación -->
       <div
-        class="hidden mt-space-md p-space-md rounded-full bg-secondary-container text-on-secondary-container font-label-md text-label-md text-center w-full flex items-center justify-center gap-2"
+        class="hidden fixed inset-x-4 bottom-5 z-50 mx-auto max-w-md flex items-center justify-center gap-3 rounded-[1.75rem] border border-emerald-200/80 bg-white/45 px-space-lg py-space-md text-center text-emerald-950 shadow-[0_12px_35px_rgba(22,101,52,0.12),inset_0_1px_0_rgba(255,255,255,0.7)] backdrop-blur-2xl"
         id="form-success"
+        aria-live="polite"
       >
-        <span class="material-symbols-outlined text-[20px]">check_circle</span>
-        <span>¡Gracias por tus palabras! Tu testimonio ha sido recibido con cariño y se publicará tras su revisión.</span>
+        <span class="material-symbols-outlined text-[20px] text-emerald-700">check_circle</span>
+        <span class="font-label-md text-label-md leading-relaxed">
+          ¡Gracias! Tu comentario será validado por nuestro equipo y pronto podrás verlo publicado.
+        </span>
       </div>
 
       <!-- Mensaje de error -->
@@ -116,6 +139,51 @@
   </div>
 </section>
 
+<div class="fixed inset-0 z-50 hidden items-center justify-center bg-on-surface/30 backdrop-blur-sm p-4" id="data-policy-modal" aria-hidden="true">
+  <div class="w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-[2rem] bg-surface-container-lowest p-space-xl shadow-[0_20px_50px_rgba(27,28,26,0.15)] border border-surface-container-high">
+    <div class="flex items-start justify-between gap-space-md mb-space-lg">
+      <div>
+        <span class="inline-flex items-center px-space-md py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm mb-space-sm">
+          Política de tratamiento de datos
+        </span>
+        <h3 class="font-headline-md text-headline-md text-on-surface tracking-tight">
+          Consentimiento, finalidad y derechos
+        </h3>
+      </div>
+      <button class="policy-close-btn flex h-10 w-10 items-center justify-center rounded-full bg-surface-container text-on-surface-variant transition-colors hover:bg-surface-container-high" type="button" aria-label="Cerrar política de datos">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
+    </div>
+
+    <div class="space-y-space-md font-body-md text-body-md text-on-surface-variant leading-relaxed">
+      <p>
+        En cumplimiento de la Ley 1581 de 2012, el Decreto 1377 de 2013 y demás normas concordantes, esta web solo utilizará los datos personales que usted autoriza para publicar el testimonio y para gestionar la comunicación relacionada con su experiencia académica.
+      </p>
+      <p>
+        Los datos que se solicitarán en este formulario son nombre completo, relación con el proceso educativo y el contenido del testimonio. Su finalidad principal es valorar la experiencia de aprendizaje y compartirla de forma respetuosa en el sitio web.
+      </p>
+      <ul class="list-disc space-y-2 pl-5">
+        <li>La información se guarda con fines de publicación, atención y seguimiento de la experiencia que ha vivido con la tutora.</li>
+        <li>La base de datos se manejará con medidas razonables de seguridad y confidencialidad.</li>
+        <li>El tratamiento no se utilizará para fines distintos a los expresamente indicados en este formulario.</li>
+        <li>Usted podrá solicitar la actualización, corrección, eliminación o revocatoria del consentimiento del tratamiento de sus datos cuando lo considere necesario.</li>
+      </ul>
+      <p>
+        Para ejercer sus derechos, puede contactarnos a través de los canales visibles en la web o mediante la información de contacto del sitio. Al aceptar este consentimiento, confirma que ha leído esta política y que presta su autorización libre, previa, informada e inequívoca para el tratamiento de sus datos personales.
+      </p>
+    </div>
+
+    <div class="mt-space-xl flex flex-col-reverse sm:flex-row sm:justify-end gap-space-sm">
+      <button class="policy-close-btn inline-flex items-center justify-center rounded-full bg-surface-container text-on-surface font-label-md text-label-md px-space-lg py-3 transition-colors hover:bg-surface-container-high" type="button">
+        Cerrar
+      </button>
+      <button class="policy-accept-btn inline-flex items-center justify-center rounded-full bg-primary text-on-primary font-label-md text-label-md px-space-lg py-3 shadow-[0_8px_20px_-4px_rgba(224,109,83,0.35)] transition-colors hover:bg-primary-container" type="button">
+        Entiendo y acepto
+      </button>
+    </div>
+  </div>
+</div>
+
 <script>
   import { supabase } from '../db/supabase.js';
 
@@ -124,12 +192,59 @@
   const nameInput = document.getElementById('student-name') as HTMLInputElement | null;
   const roleInput = document.getElementById('student-role') as HTMLInputElement | null;
   const reviewInput = document.getElementById('student-review') as HTMLTextAreaElement | null;
+  const dataPolicyCheckbox = document.getElementById('data-policy') as HTMLInputElement | null;
   const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
   const successMsg = document.getElementById('form-success');
   const errorMsg = document.getElementById('form-error');
   const errorText = document.getElementById('form-error-text');
   const ratingLabel = document.getElementById('rating-label');
   const starBtns = document.querySelectorAll('.star-btn');
+  const policyModal = document.getElementById('data-policy-modal');
+  const openPolicyButtons = document.querySelectorAll('.policy-open-btn');
+  const closePolicyButtons = document.querySelectorAll('.policy-close-btn');
+  const acceptPolicyButton = document.querySelector('.policy-accept-btn');
+
+  const openPolicyModal = () => {
+    if (!policyModal) return;
+    policyModal.classList.remove('hidden');
+    policyModal.classList.add('flex');
+    policyModal.setAttribute('aria-hidden', 'false');
+  };
+
+  const closePolicyModal = () => {
+    if (!policyModal) return;
+    policyModal.classList.add('hidden');
+    policyModal.classList.remove('flex');
+    policyModal.setAttribute('aria-hidden', 'true');
+  };
+
+  openPolicyButtons.forEach((button) => {
+    button.addEventListener('click', openPolicyModal);
+  });
+
+  closePolicyButtons.forEach((button) => {
+    button.addEventListener('click', closePolicyModal);
+  });
+
+  acceptPolicyButton?.addEventListener('click', () => {
+    if (dataPolicyCheckbox) {
+      dataPolicyCheckbox.checked = true;
+    }
+    closePolicyModal();
+  });
+
+  policyModal?.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement | null;
+    if (target && target.id === 'data-policy-modal') {
+      closePolicyModal();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && policyModal && !policyModal.classList.contains('hidden')) {
+      closePolicyModal();
+    }
+  });
 
   // Interacción del selector de estrellas
   starBtns.forEach((btn) => {
@@ -162,8 +277,20 @@
     const name = nameInput?.value.trim() || '';
     const role = roleInput?.value.trim() || '';
     const description = reviewInput?.value.trim() || '';
+    const dataPolicyAccepted = dataPolicyCheckbox?.checked ?? false;
 
     if (!name || !description) return;
+
+    if (!dataPolicyAccepted) {
+      if (errorMsg && errorText) {
+        errorText.textContent = 'Debes aceptar la política de tratamiento de datos para enviar tu testimonio.';
+        errorMsg.classList.remove('hidden');
+      }
+      dataPolicyCheckbox?.focus();
+      return;
+    }
+
+    if (errorMsg) errorMsg.classList.add('hidden');
 
     const formattedName = role ? `${name} (${role})` : name;
 
@@ -178,7 +305,8 @@
         name: formattedName,
         description: description,
         stars: currentRating,
-        approved: false
+        approved: false,
+        data_policy: true
       });
 
       if (error) {
