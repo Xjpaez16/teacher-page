@@ -33,14 +33,102 @@
         >
           Agendar clase
         </a>
+
+        <!-- Botón menú hamburguesa (3 líneas) visible en móviles -->
+        <button
+          id="mobile-menu-btn"
+          type="button"
+          class="md:hidden w-11 h-11 rounded-full bg-surface-container-low hover:bg-surface-container-high flex items-center justify-center text-on-surface transition-colors cursor-pointer"
+          aria-label="Abrir menú de navegación"
+          aria-expanded="false"
+          aria-controls="mobile-nav-menu"
+        >
+          <span id="mobile-menu-icon" class="material-symbols-outlined text-[24px]">menu</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Menú desplegable para móviles -->
+    <div
+      id="mobile-nav-menu"
+      class="md:hidden mt-2 p-space-md bg-surface-bright/95 backdrop-blur-2xl rounded-[2rem] shadow-[0_12px_36px_rgba(36,33,30,0.12)] border border-outline-variant/30 flex flex-col gap-1 transition-all duration-300 ease-out opacity-0 pointer-events-none -translate-y-2"
+    >
+      <a
+        class="mobile-nav-link nav-link px-space-md py-3 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all"
+        href="#sobre-mi"
+      >
+        Sobre mí
+      </a>
+      <a
+        class="mobile-nav-link nav-link px-space-md py-3 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all"
+        href="#servicios"
+      >
+        Servicios
+      </a>
+      <a
+        class="mobile-nav-link nav-link px-space-md py-3 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all"
+        href="#testimonios"
+      >
+        Testimonios
+      </a>
+      <a
+        class="mobile-nav-link nav-link px-space-md py-3 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all"
+        href="#contacto"
+      >
+        Contacto
+      </a>
+      <div class="pt-2 border-t border-surface-container-high/60 sm:hidden">
+        <a
+          class="inline-flex items-center justify-center w-full py-3 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm hover:bg-primary-container active:scale-[0.98] transition-all"
+          href="https://wa.link/lgzrrc"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Agendar clase
+        </a>
       </div>
     </div>
   </div>
 </header>
 
 <script>
+  // Control del menú hamburguesa móvil
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+  const mobileNavMenu = document.getElementById('mobile-nav-menu');
+  let isMenuOpen = false;
+
+  function toggleMobileMenu(open?: boolean) {
+    isMenuOpen = open !== undefined ? open : !isMenuOpen;
+    if (!mobileNavMenu || !mobileMenuBtn || !mobileMenuIcon) return;
+
+    mobileMenuBtn.setAttribute('aria-expanded', String(isMenuOpen));
+
+    if (isMenuOpen) {
+      mobileNavMenu.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-2');
+      mobileNavMenu.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+      mobileMenuIcon.textContent = 'close';
+    } else {
+      mobileNavMenu.classList.add('opacity-0', 'pointer-events-none', '-translate-y-2');
+      mobileNavMenu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+      mobileMenuIcon.textContent = 'menu';
+    }
+  }
+
+  mobileMenuBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleMobileMenu();
+  });
+
+  // Cerrar al hacer clic fuera del menú móvil
+  document.addEventListener('click', (e) => {
+    if (isMenuOpen && mobileNavMenu && !mobileNavMenu.contains(e.target as Node) && e.target !== mobileMenuBtn) {
+      toggleMobileMenu(false);
+    }
+  });
+
   // Manejo de scroll suave y preciso para evitar saltos bruscos
-  const navLinks = document.querySelectorAll<HTMLAnchorElement>('#desktop-nav .nav-link, a[href="#sobre-mi"], a[href="#testimonios"], a[href="#servicios"], a[href="#contacto"]');
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>('.nav-link, a[href="#sobre-mi"], a[href="#testimonios"], a[href="#servicios"], a[href="#contacto"]');
 
   navLinks.forEach((link) => {
     link.addEventListener('click', (e) => {
@@ -49,6 +137,11 @@
       const target = document.querySelector(href);
       if (target) {
         e.preventDefault();
+        // Si el menú móvil está abierto, cerrarlo al seleccionar una sección
+        if (isMenuOpen) {
+          toggleMobileMenu(false);
+        }
+
         const headerOffset = 90;
         const targetPosition = target.getBoundingClientRect().top + window.scrollY - headerOffset;
 
@@ -65,7 +158,8 @@
 
   // Indicador de enlace activo según la sección visible
   const sections = ['sobre-mi', 'servicios', 'testimonios', 'contacto'];
-  const headerLinks = document.querySelectorAll<HTMLAnchorElement>('#desktop-nav .nav-link');
+  const desktopLinks = document.querySelectorAll<HTMLAnchorElement>('#desktop-nav .nav-link');
+  const mobileLinks = document.querySelectorAll<HTMLAnchorElement>('#mobile-nav-menu .mobile-nav-link');
 
   function updateActiveLink() {
     const scrollPos = window.scrollY + 140;
@@ -83,13 +177,24 @@
       }
     }
 
-    headerLinks.forEach((link) => {
+    desktopLinks.forEach((link) => {
       const href = link.getAttribute('href');
       if (href === `#${currentId}`) {
         link.classList.add('bg-primary-fixed', 'text-on-primary-fixed', 'font-medium', 'shadow-sm');
         link.classList.remove('text-on-surface-variant');
       } else {
         link.classList.remove('bg-primary-fixed', 'text-on-primary-fixed', 'font-medium', 'shadow-sm');
+        link.classList.add('text-on-surface-variant');
+      }
+    });
+
+    mobileLinks.forEach((link) => {
+      const href = link.getAttribute('href');
+      if (href === `#${currentId}`) {
+        link.classList.add('bg-primary-fixed', 'text-on-primary-fixed', 'font-semibold');
+        link.classList.remove('text-on-surface-variant');
+      } else {
+        link.classList.remove('bg-primary-fixed', 'text-on-primary-fixed', 'font-semibold');
         link.classList.add('text-on-surface-variant');
       }
     });
