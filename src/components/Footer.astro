@@ -46,7 +46,7 @@
           <a
             aria-label="Correo electrónico"
             class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center text-secondary hover:bg-secondary-container hover:text-on-secondary-container transition-colors shadow-[0_2px_8px_rgba(36,33,30,0.04)]"
-            href="mailto:hola@claramendez.es"
+            href="mailto:patico04061980@gmail.com"
           >
             <span class="material-symbols-outlined text-[20px]">mail</span>
           </a>
@@ -96,7 +96,7 @@
         <div class="pt-space-xs">
           <a
             class="inline-flex items-center justify-center px-space-md py-space-xs rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md hover:bg-secondary hover:text-on-secondary transition-all"
-            href="https://wa.me/?text=Hola%20Clara,%20quisiera%20agendar%20una%20consulta%20inicial%20gratuita"
+            href="https://wa.link/lgzrrc"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -109,17 +109,229 @@
     <!-- Copyright -->
     <div class="pt-space-xl border-t border-surface-container-high/60 flex flex-col sm:flex-row items-center justify-between gap-space-md text-center sm:text-left">
       <p class="font-body-sm text-body-sm text-on-surface-variant">
-        © 2024 Clara Méndez. Educación con calidez, paciencia y rigor.
+        © 2026 Claudia Patricia Sierra. Educación con calidez, paciencia y rigor.
       </p>
       <div class="flex items-center gap-space-lg">
-        <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+        <button
+          id="btn-aviso-legal"
+          type="button"
+          class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer underline underline-offset-4 decoration-transparent hover:decoration-current"
+        >
           Aviso legal
-        </a>
-        <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">
-          Política de privacidad
-        </a>
+        </button>
+        <button
+          id="btn-politica-privacidad"
+          type="button"
+          class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer underline underline-offset-4 decoration-transparent hover:decoration-current"
+        >
+          Política de privacidad y datos
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Legal & Privacidad -->
+  <div
+    id="legal-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="legal-modal-title"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-on-surface/50 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300 ease-out"
+  >
+    <div
+      id="legal-modal-card"
+      class="relative w-full max-w-2xl bg-surface-container-lowest rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_20px_50px_rgba(36,33,30,0.2)] border border-outline-variant/30 flex flex-col max-h-[85vh] overflow-hidden transform scale-95 transition-all duration-300 ease-out"
+    >
+      <!-- Modal Header -->
+      <div class="p-space-lg sm:p-space-xl border-b border-surface-container-high/70 flex flex-col gap-space-sm bg-surface-bright">
+        <div class="flex items-center justify-between gap-space-sm">
+          <div class="flex items-center gap-space-xs">
+            <span class="w-8 h-8 rounded-full bg-primary-fixed/60 flex items-center justify-center text-primary">
+              <span class="material-symbols-outlined text-[20px]">shield</span>
+            </span>
+            <h3 id="legal-modal-title" class="font-headline-sm text-headline-sm text-on-surface">
+              Términos e Información Legal
+            </h3>
+          </div>
+          <button
+            id="close-legal-modal"
+            type="button"
+            class="w-10 h-10 rounded-full bg-surface-container-low hover:bg-surface-container-high flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer"
+            aria-label="Cerrar modal"
+          >
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+
+        <!-- Tabs Switcher -->
+        <div class="flex flex-wrap items-center gap-2 pt-1">
+          <button
+            id="tab-btn-aviso"
+            type="button"
+            class="px-4 py-2 rounded-full font-label-md text-label-md transition-all cursor-pointer bg-primary text-on-primary shadow-sm"
+          >
+            Aviso Legal
+          </button>
+          <button
+            id="tab-btn-politica"
+            type="button"
+            class="px-4 py-2 rounded-full font-label-md text-label-md transition-all cursor-pointer bg-surface-container text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface"
+          >
+            Política de Privacidad y Datos
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-space-lg sm:p-space-xl overflow-y-auto space-y-4 font-body-sm text-on-surface-variant leading-relaxed">
+        <!-- Tab 1: Aviso Legal -->
+        <div id="tab-content-aviso" class="space-y-4">
+          <div>
+            <h4 class="font-headline-sm text-[16px] text-primary mb-1">1. Titularidad y Objeto</h4>
+            <p>
+              El presente sitio web es administrado por <strong>Claudia Patricia Sierra</strong>, licenciada en Educación Preescolar con más de 20 años de trayectoria docente. Este portal tiene como propósito brindar información acerca de los servicios pedagógicos, asesorías escolares personalizadas, refuerzo escolar presencial y online, así como facilitar el contacto directo entre las familias y la docente.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="font-headline-sm text-[16px] text-primary mb-1">2. Propiedad Intelectual</h4>
+            <p>
+              Todos los contenidos, textos explicativos, metodologías pedagógicas, recursos didácticos y elementos visuales presentados en este portal pertenecen a su titular o se utilizan bajo licencia y autorización correspondiente. Queda prohibida su reproducción o explotación total o parcial sin consentimiento previo por escrito.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="font-headline-sm text-[16px] text-primary mb-1">3. Condiciones de Uso</h4>
+            <p>
+              El usuario se compromete a hacer un uso adecuado y lícito del sitio web y de sus vías de contacto (formulario de testimonios, enlaces directos a WhatsApp y correo electrónico), absteniéndose de remitir información falsa, lesiva o contraria a la moral y las buenas costumbres.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="font-headline-sm text-[16px] text-primary mb-1">4. Exención de Responsabilidad</h4>
+            <p>
+              La información académica y formativa proporcionada tiene carácter orientativo y pedagógico. Aunque se busca la mayor excelencia en cada sesión, el rendimiento escolar del estudiante depende también de su dedicación, contexto educativo particular y trabajo autónomo coordinado con la familia y el colegio.
+            </p>
+          </div>
+        </div>
+
+        <!-- Tab 2: Política de Privacidad y Datos -->
+        <div id="tab-content-politica" class="space-y-4 hidden">
+          <div>
+            <h4 class="font-headline-sm text-[16px] text-primary mb-1">1. Tratamiento de Datos Personales (Habeas Data)</h4>
+            <p>
+              En cumplimiento del marco legal de protección de datos personales (Ley 1581 de 2012 y normatividad concordante), le informamos que los datos suministrados a través de los formularios o canales de contacto serán tratados con estricta confidencialidad y con la única finalidad de coordinar horarios, brindar retroalimentación escolar y gestionar los testimonios pedagógicos consentidos.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="font-headline-sm text-[16px] text-primary mb-1">2. Datos Recopilados</h4>
+            <p>
+              Se podrán recolectar datos de identificación y contacto del padre, madre, acudiente o alumno (nombre, número de WhatsApp, correo electrónico, grado escolar y necesidades de aprendizaje) con fines exclusivamente pedagógicos y comunicativos directos.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="font-headline-sm text-[16px] text-primary mb-1">3. Protección Especial a Menores de Edad</h4>
+            <p>
+              El bienestar y la privacidad de los niños y niñas son la máxima prioridad. Toda recopilación de información escolar o académica relativa a menores se realiza bajo autorización expresa del padre, madre o tutor legal, garantizando el respeto prevalente de sus derechos fundamentales.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="font-headline-sm text-[16px] text-primary mb-1">4. Testimonios y Publicaciones</h4>
+            <p>
+              Al enviar un testimonio a través del formulario de la web, usted autoriza libre y voluntariamente su publicación con fines divulgativos y de recomendación profesional. Dichos testimonios pasan por un filtro de aprobación previa.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="font-headline-sm text-[16px] text-primary mb-1">5. Derechos del Titular</h4>
+            <p>
+              Usted tiene derecho a conocer, actualizar, rectificar o solicitar la supresión de sus datos personales en cualquier momento. Para ejercer estos derechos, puede escribir directamente a: <a href="mailto:patico04061980@gmail.com" class="text-primary underline hover:text-primary-container font-medium">patico04061980@gmail.com</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-space-md sm:p-space-lg border-t border-surface-container-high/70 bg-surface-container-low/50 flex justify-end">
+        <button
+          id="confirm-legal-modal"
+          type="button"
+          class="px-space-lg py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm hover:bg-primary-container active:scale-[0.98] transition-all cursor-pointer"
+        >
+          Entendido y cerrar
+        </button>
       </div>
     </div>
   </div>
 </footer>
+
+<script>
+  const modal = document.getElementById('legal-modal');
+  const modalCard = document.getElementById('legal-modal-card');
+  const btnAviso = document.getElementById('btn-aviso-legal');
+  const btnPolitica = document.getElementById('btn-politica-privacidad');
+  const btnClose = document.getElementById('close-legal-modal');
+  const btnConfirm = document.getElementById('confirm-legal-modal');
+
+  const tabBtnAviso = document.getElementById('tab-btn-aviso');
+  const tabBtnPolitica = document.getElementById('tab-btn-politica');
+  const contentAviso = document.getElementById('tab-content-aviso');
+  const contentPolitica = document.getElementById('tab-content-politica');
+
+  function openTab(tab: 'aviso' | 'politica') {
+    if (tab === 'aviso') {
+      contentAviso?.classList.remove('hidden');
+      contentPolitica?.classList.add('hidden');
+      tabBtnAviso?.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+      tabBtnAviso?.classList.remove('bg-surface-container', 'text-on-surface-variant');
+      tabBtnPolitica?.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+      tabBtnPolitica?.classList.add('bg-surface-container', 'text-on-surface-variant');
+    } else {
+      contentPolitica?.classList.remove('hidden');
+      contentAviso?.classList.add('hidden');
+      tabBtnPolitica?.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+      tabBtnPolitica?.classList.remove('bg-surface-container', 'text-on-surface-variant');
+      tabBtnAviso?.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+      tabBtnAviso?.classList.add('bg-surface-container', 'text-on-surface-variant');
+    }
+  }
+
+  function openModal(tab: 'aviso' | 'politica') {
+    openTab(tab);
+    modal?.classList.remove('opacity-0', 'pointer-events-none');
+    modalCard?.classList.remove('scale-95');
+    modalCard?.classList.add('scale-100');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal?.classList.add('opacity-0', 'pointer-events-none');
+    modalCard?.classList.remove('scale-100');
+    modalCard?.classList.add('scale-95');
+    document.body.style.overflow = '';
+  }
+
+  btnAviso?.addEventListener('click', () => openModal('aviso'));
+  btnPolitica?.addEventListener('click', () => openModal('politica'));
+  tabBtnAviso?.addEventListener('click', () => openTab('aviso'));
+  tabBtnPolitica?.addEventListener('click', () => openTab('politica'));
+
+  btnClose?.addEventListener('click', closeModal);
+  btnConfirm?.addEventListener('click', closeModal);
+
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  });
+</script>
 

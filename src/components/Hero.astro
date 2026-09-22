@@ -30,10 +30,14 @@ try {
       <div class="lg:col-span-6 flex flex-col items-start gap-space-lg">
         <!-- Floating Status Pills -->
         <div class="flex flex-wrap items-center gap-space-xs">
-          <span class="inline-flex items-center gap-1.5 px-space-md py-1.5 rounded-full bg-secondary/10 text-secondary font-label-sm text-label-sm shadow-sm">
-            <span class="text-amber-500 font-bold">⭐ {avgRating}/5</span>
-            <span>valoración</span>
-          </span>
+          <a
+            href="#testimonios"
+            class="inline-flex items-center gap-1.5 px-space-md py-1.5 rounded-full bg-secondary/10 text-secondary font-label-sm text-label-sm shadow-sm hover:bg-secondary/20 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+            title="Ver testimonios de familias"
+          >
+            <span class="text-amber-500 font-bold" id="hero-rating-value">⭐ {avgRating}/5</span>
+            <span id="hero-rating-label">valoración</span>
+          </a>
           <span class="inline-flex items-center gap-1.5 px-space-md py-1.5 rounded-full bg-primary-fixed/60 text-on-primary-fixed-variant font-label-sm text-label-sm shadow-sm">
             <span>📚 +350</span>
             <span>alumnos acompañados</span>
@@ -101,4 +105,41 @@ try {
     </div>
   </div>
 </section>
+
+<script>
+  import { supabase } from '../db/supabase.js';
+
+  async function updateHeroRating() {
+    try {
+      const { data, error } = await supabase
+        .from('testimonies')
+        .select('stars')
+        .eq('approved', true);
+
+      if (!error && data && data.length > 0) {
+        const validStars = data
+          .map((r) => r.stars)
+          .filter((s): s is number => typeof s === 'number' && s > 0);
+
+        if (validStars.length > 0) {
+          const avg = validStars.reduce((a, b) => a + b, 0) / validStars.length;
+          const ratingValEl = document.getElementById('hero-rating-value');
+          if (ratingValEl) {
+            ratingValEl.textContent = `⭐ ${avg.toFixed(1)}/5`;
+          }
+        }
+      }
+    } catch (err) {
+      console.error('Error actualizando valoración en Hero:', err);
+    }
+  }
+
+  // Ejecución inicial en cliente
+  updateHeroRating();
+
+  // Escuchar cuando se apruebe o envíe un nuevo testimonio
+  window.addEventListener('testimonial-submitted', () => {
+    updateHeroRating();
+  });
+</script>
 
